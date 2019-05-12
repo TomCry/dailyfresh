@@ -121,7 +121,7 @@ AUTH_USER_MODEL = 'user.User'
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.163.com' # 对应邮箱的email主机地址
 EMAIL_PORT = 25
-EMAIL_HOST_USER = ''
-EMAIL_HOST_PASSWORD = ''
+EMAIL_HOST_USER = 'itcast_enzyme@163.com'
+EMAIL_HOST_PASSWORD = 'enzyme0313'
 # 收件人看到的发件人
-EMAIL_FROM = ''
+EMAIL_FROM = 'python<itcast_enzyme@163.com>'
