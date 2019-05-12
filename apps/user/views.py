@@ -135,7 +135,7 @@ class ActiveView(View):
 
             # 用户已激活，跳转到登录页面
             redirect(reverse('user:login'))
-        except SignatureExpired:
+        except SignatureExpired as e:
             # 激活链接过期
             return HttpResponse('激活链接已过期')
 
