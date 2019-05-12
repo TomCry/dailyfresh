@@ -127,7 +127,7 @@ class ActiveView(View):
         try:
             info = serializer.loads(token)
             # 获取待激活用户的di
-            user_id = info['confirt']
+            user_id = info['confirm']
             # 根据id获取用户信息
             user = User.objects.get(id=user_id)
             user.is_active = 1
