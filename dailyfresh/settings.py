@@ -82,7 +82,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'dailyfresh',
-        'HOST': '192.168.33.226',
+        'HOST': '192.168.33.239',
         'PORT': 3306,
         'USER': 'root',
         'PASSWORD': 'root',
@@ -118,10 +118,14 @@ TINYMCE_DEFAULT_CONFIG = {
 # django认证系统使用的模型类
 AUTH_USER_MODEL = 'user.User'
 
+# 发送邮件配置
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.163.com' # 对应邮箱的email主机地址
+# smpt服务地址
+EMAIL_HOST = 'smtp.qq.com'
 EMAIL_PORT = 25
-EMAIL_HOST_USER = 'itcast_enzyme@163.com'
-EMAIL_HOST_PASSWORD = 'enzyme0313'
+# 发送邮件的邮箱
+EMAIL_HOST_USER = '2356771052@qq.com'
+# 在邮箱中设置的客户端授权密码
+EMAIL_HOST_PASSWORD = 'uzcbfjfqmmnjebbb'
 # 收件人看到的发件人
-EMAIL_FROM = 'python<itcast_enzyme@163.com>'
+EMAIL_FROM = '天天生鲜<2356771052@qq.com>'
