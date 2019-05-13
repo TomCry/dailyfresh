@@ -1,11 +1,10 @@
 from django.shortcuts import render, redirect
 from django.core.urlresolvers import reverse
-from django.core.mail import send_mail
 from django.views.generic import View
 from django.http import HttpResponse
 from django.conf import settings
 from apps.user.models import User
-
+from celery_tasks.tasks import send_register_active_email
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 from itsdangerous import SignatureExpired
 
@@ -106,12 +105,7 @@ class RegisterView(View):
         # 取消链接后的b
         token = token.decode()
         # 发邮件
-        subject = '天天生鲜欢迎信息'
-        message = ''
-        html_message = '<h1>%s, 欢迎您成为天天生鲜注册会员</h1>请点击下面链接激活您的账户<br><a href="http://127.0.0.1:8000/user/active/%s">http://127.0.0.1:8000/user/active/%s</a>' % (username, token, token)
-        sender = settings.EMAIL_FROM
-        receiver = [email]
-        send_mail(subject, message, sender, receiver, html_message=html_message)
+        send_register_active_email.delay(email, username, token)
         # 最后返回到index.html页面并提示用户注册成功
         return redirect(reverse('goods:index'))
 
