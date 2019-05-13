@@ -104,15 +104,14 @@ class RegisterView(View):
         info = {'confirm': user.id}
         token = serializer.dumps(info)
         # 取消链接后的b
-        token = token.decode('utf-8')
+        token = token.decode()
         # 发邮件
         subject = '天天生鲜欢迎信息'
-        message = '<h1>%s, 欢迎您成为天天生鲜注册会员</h1>请点击下面链接激活您的账户<br><a href="http://127.0.0.1:8000/user/active/%s">http://127.0.0.1:8000/user/active/%s</a>' % (
-            username, token, token)
+        message = ''
+        html_message = '<h1>%s, 欢迎您成为天天生鲜注册会员</h1>请点击下面链接激活您的账户<br><a href="http://127.0.0.1:8000/user/active/%s">http://127.0.0.1:8000/user/active/%s</a>' % (username, token, token)
         sender = settings.EMAIL_FROM
         receiver = [email]
-        html_message = message
-        send_mail(subject, '', sender, receiver, html_message=html_message)
+        send_mail(subject, message, sender, receiver, html_message=html_message)
         # 最后返回到index.html页面并提示用户注册成功
         return redirect(reverse('goods:index'))
 
@@ -126,7 +125,7 @@ class ActiveView(View):
         serializer = Serializer(settings.SECRET_KEY, 3600)
         try:
             info = serializer.loads(token)
-            # 获取待激活用户的di
+            # 获取待激活用户的id
             user_id = info['confirm']
             # 根据id获取用户信息
             user = User.objects.get(id=user_id)
@@ -134,7 +133,7 @@ class ActiveView(View):
             user.save()
 
             # 用户已激活，跳转到登录页面
-            redirect(reverse('user:login'))
+            return redirect(reverse('user:login'))
         except SignatureExpired:
             # 激活链接过期
             return HttpResponse('激活链接已过期')
