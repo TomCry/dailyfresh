@@ -163,7 +163,7 @@ class LoginView(View):
                 remember = request.POST.get('remember')
                 if remember == 'on':
                     # 记住用户名
-                    response.set_cookie('username', username, max_age=7*24*3600)
+                    response.set_cookie('username', username, max_age=7 * 24 * 3600)
                 else:
                     response.delete_cookie('username')
 
@@ -173,3 +173,22 @@ class LoginView(View):
                 return render(request, 'login.html', {'errmsg': '用户未激活'})
         else:
             return render(request, 'login.html', {'errmsg': '用户名或密码错误'})
+
+
+# /user
+class UserInfoView(View):
+
+    def get(self, request):
+        return render(request, 'user_center_info.html', {'page': 'user'})
+
+
+class UserOrderView(View):
+
+    def get(self, request):
+        return render(request, 'user_center_order.html', {'page': 'order'})
+
+
+class AddressView(View):
+
+    def get(self, request):
+        return render(request, 'user_center_site.html', {'page': 'address'})
