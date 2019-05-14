@@ -157,8 +157,8 @@ class LoginView(View):
         if user:
             if user.is_active:
                 login(request, user)
-
-                response = redirect(reverse('goods:index'))
+                next_url = request.GET.get('next', reverse('goods:index'))
+                response = redirect(next_url)
                 # 判断是否需要记住用户名
                 remember = request.POST.get('remember')
                 if remember == 'on':
