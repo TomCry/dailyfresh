@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.core.urlresolvers import reverse
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.views.generic import View
 from django.http import HttpResponse
 from django.conf import settings
@@ -176,11 +176,18 @@ class LoginView(View):
             return render(request, 'login.html', {'errmsg': '用户名或密码错误'})
 
 
+class LogoutView(View):
+
+    def get(self, request):
+        logout(request)
+
+        return redirect(reverse('goods:index'))
+
+
 # /user
 class UserInfoView(LoginRequiredMixin, View):
 
     def get(self, request):
-
         # 除了你给模板文件传递的模板变量之外， jango框架会把request.user也传给模板文件
         # 如果用户登录则是user类的一个实例，否则是一个AnonymousUser的实例
         return render(request, 'user_center_info.html', {'page': 'user'})
