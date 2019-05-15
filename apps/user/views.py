@@ -8,6 +8,7 @@ from apps.user.models import User
 from celery_tasks.tasks import send_register_active_email
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 from itsdangerous import SignatureExpired
+from utils.minxi import LoginRequiredMixin
 
 import re
 
@@ -176,19 +177,19 @@ class LoginView(View):
 
 
 # /user
-class UserInfoView(View):
+class UserInfoView(LoginRequiredMixin, View):
 
     def get(self, request):
         return render(request, 'user_center_info.html', {'page': 'user'})
 
 
-class UserOrderView(View):
+class UserOrderView(LoginRequiredMixin, View):
 
     def get(self, request):
         return render(request, 'user_center_order.html', {'page': 'order'})
 
 
-class AddressView(View):
+class AddressView(LoginRequiredMixin, View):
 
     def get(self, request):
         return render(request, 'user_center_site.html', {'page': 'address'})
