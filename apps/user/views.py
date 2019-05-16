@@ -225,7 +225,7 @@ class UserInfoView(LoginRequiredMixin, View):
             'goods_li': goods_li
         }
 
-        return render(request, 'user_center_info.html', {'page': 'user', 'address': address})
+        return render(request, 'user_center_info.html', context)
 
 
 class UserOrderView(LoginRequiredMixin, View):
